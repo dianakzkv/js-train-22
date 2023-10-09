@@ -62,17 +62,18 @@ class Store {
 	 * Після виклику цього методу, новий продукт буде створено, а всі підписники отримають про це повідомлення через sendNotify.
 	 */
 	createProduct(name) {
-		return new Product(name);
+		const product = new Product(name);
+		this.sendNotify(product);
 	}
 	/**
 	 * Метод для відправки повідомлень всім підписникам про новий продукт. Приймає product - Продукт, про який відправляється повідомлення.
 	 * Новий продукт "${product.name}" в магазині ${this.name}! за допомогою sendEmail.
 	 */
 	sendNotify(product) {
-		const message = `Новий продукт "${product.name}" в магазині ${this.name}!`;
-
 		this.customers.forEach(customer => {
-			customer.sendEmail(message);
+			customer.sendEmail(
+				`Новий продукт "${product.name}" в магазині ${this.name}!`
+			);
 		});
 	}
 	// За допомогою forEach перебираємо масив customers
